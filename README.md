@@ -67,7 +67,8 @@ $
 
 ### Reading configuration files  
 <pre>
-$ cat [bug_tracker]
+$ cat read_simple.ini
+[bug_tracker]
 url =https://timesofindia.indiatimes.com/
 
 $ cat read_config.py 
