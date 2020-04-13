@@ -1,4 +1,4 @@
-###Managing passwords  
+### Managing passwords  
 <pre>
 $ cat handling_password.py
 import sys
@@ -25,7 +25,7 @@ $ python3 handling_password.py
 Successful connection 192.168.2.106
 </pre>  
 
-###Executing external commands  
+### Executing external commands  
 <pre>
 $ cat execute_external_commands.py
 import subprocess
@@ -47,7 +47,7 @@ Sample.txt file deleted
 $ 
 </pre>  
 
-###Prompting for a password and validating  
+### Prompting for a password and validating  
 <pre>
 $ cat getpass_example.py 
 import getpass
@@ -65,7 +65,7 @@ Welcome!!
 $ 			
 </pre>  
 
-###Reading configuration files  
+### Reading configuration files  
 <pre>
 $ cat [bug_tracker]
 url =https://timesofindia.indiatimes.com/
@@ -81,7 +81,7 @@ https://timesofindia.indiatimes.com/
 $
 </pre>  
 
-###Making backups  
+### Making backups  
 <pre>
 $ cat take_backup.py 
 import os
@@ -131,7 +131,7 @@ rsync("-auhv", "--delete", "--exclude=lost+found", "--exclude=/sys", "--exclude=
 $ 
 </pre>  
 
-###Comparing data  
+### Comparing data  
 <pre>
 $ cat file1.csv 
 Id,Name,Gender,Age,Address
