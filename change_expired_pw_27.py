@@ -35,6 +35,7 @@ def change_expired_password_over_ssh(host, username, current_password, new_passw
    if interact.exit_status_ready():
        print "EXIT :", interact.recv_exit_status()
 
+   interact.recv(-1)
    print "Password Changed"
 
 change_expired_password_over_ssh('13.235.71.179', 'testuser', 'singapore123456', 'L96CfZKLdvB+x1y') 
