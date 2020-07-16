@@ -178,3 +178,69 @@ $ python3 compare_data.py
 2  102  Mary  Female  20    London
 $
 </pre>
+
+### Changing expired password 
+<pre>
+# sshpass -v -p singapore123456 ssh testuser@15.206.89.143 id 
+SSHPASS searching for password prompt using match "assword"
+SSHPASS read: Password: 
+SSHPASS detected prompt. Sending password.
+SSHPASS read: 
+
+SSHPASS read: You are required to change your password immediately (root enforced)
+Changing password for testuser.
+(current) UNIX password: 
+SSHPASS detected prompt, again. Wrong password. Terminating.
+#
+
+# python --version 
+Python 2.7.5
+# cat change_expired_pw_27.py
+import paramiko
+
+def change_expired_password_over_ssh(host, username, current_password, new_password):
+   '''
+   If got error on login then set with interactive mode.
+   '''
+   ssh_conn = paramiko.SSHClient()
+   ssh_conn.set_missing_host_key_policy(paramiko.AutoAddPolicy())
+   ssh_conn.load_system_host_keys()
+   ssh_conn.connect(hostname=host, username=username, password=current_password)
+
+   interact = ssh_conn.invoke_shell()
+   buff = ''
+   while not buff.endswith('UNIX password: '):
+       resp = interact.recv(9999)
+       buff += resp
+   interact.send(current_password + '\n')
+
+   buff = ''
+   while not buff.endswith('New password: '):
+       resp = interact.recv(9999)
+       buff += resp
+
+   interact.send(new_password + '\n')
+
+   buff = ''
+   while not buff.endswith('Retype new password: '):
+       resp = interact.recv(9999)
+       buff += resp
+
+   interact.send(new_password + '\n')
+   interact.shutdown(2)
+   if interact.exit_status_ready():
+       print "EXIT :", interact.recv_exit_status()
+
+   print "LST :", interact.recv(-1)
+   print "Password Changed"
+
+change_expired_password_over_ssh('15.206.89.143', 'testuser', 'singapore123456', 'L96CfZKLdvB+x1y') 
+# sshpass -v -p L96CfZKLdvB+x1y ssh testuser@15.206.89.143 id
+SSHPASS searching for password prompt using match "assword"
+SSHPASS read: Password: 
+SSHPASS detected prompt. Sending password.
+SSHPASS read: 
+
+uid=1006(testuser) gid=1009(testuser) groups=1009(testuser)
+# 
+</pre>
